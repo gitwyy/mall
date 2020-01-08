@@ -64,7 +64,7 @@ docker run -p 80:80 --name nginx \
 -v /mydata/nginx/logs:/var/log/nginx  \
 -d nginx:1.10
 ### 修改nginx配置
-1. 将容器内的配置文件拷贝到当前目录：docker container cp nginx:/etc/nginx .
+1. 将容器内的配置文件拷贝到当前目录：docker container cp nginx:/etc/nginx /mydata/nginx/
 2. 修改文件名称：mv nginx conf
 3. 终止容器：docker stop nginx
 4. 执行命令删除原容器：docker rm $ContainerId
@@ -86,6 +86,8 @@ rabbitmq:management
 ## elasticsearch安装
 ### 下载镜像文件
 docker pull elasticsearch:6.4.0
+### 
+chmod 777 /mydata/elasticsearch/data/
 ### 创建实例并运行
 docker run -p 9200:9200 -p 9300:9300 --name elasticsearch \
 -v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
@@ -106,6 +108,14 @@ docker run -p 9200:9200 -p 9300:9300 --name elasticsearch \
     - 访问header插件：打开地址http://192.168.1.66:9200/_plugin/head/ 
     - 选择复合查询，输入地址：POST:http://192.168.1.66:9200/_analyze 
     - 输入参数：JSON:{"analyzer":"ik","text":"我们是大数据开发人员"}
+### kibana 安装
+### 下载kibana6.4.0的docker镜像
+docker pull kibana:6.4.0
+### 运行
+docker run --name kibana -p 5601:5601 \
+--link elasticsearch:es \
+-e "elasticsearch.hosts=http://es:9200" \
+-d kibana:6.4.0
 
 ## mongodb安装
 ### 下载镜像文件
@@ -137,6 +147,7 @@ docker run -p 8085:8085 --name mall-portal \
 --link mysql:db \
 --link redis:redis \
 --link mongo:mongo \
+--link rabbitmq:rabbit \
 -v /etc/timezone:/etc/timezone \
 -v /etc/localtime:/etc/localtime \
 -v /mydata/app/portal/logs:/var/logs \
