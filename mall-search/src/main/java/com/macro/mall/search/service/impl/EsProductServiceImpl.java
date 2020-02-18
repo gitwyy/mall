@@ -64,7 +64,6 @@ public class EsProductServiceImpl implements EsProductService {
             result++;
             iterator.next();
         }
-
         return result;
     }
 
