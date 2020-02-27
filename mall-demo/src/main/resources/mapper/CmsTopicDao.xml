@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.demo.dao.CmsTopicDao">
+
+    <resultMap type="com.macro.mall.demo.entity.CmsTopic" id="CmsTopicMap">
+        <result property="id" column="id" jdbcType="NUMERIC"/>
+        <result property="categoryId" column="category_id" jdbcType="NUMERIC"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="attendCount" column="attend_count" jdbcType="NUMERIC"/>
+        <result property="attentionCount" column="attention_count" jdbcType="NUMERIC"/>
+        <result property="readCount" column="read_count" jdbcType="NUMERIC"/>
+        <result property="awardName" column="award_name" jdbcType="VARCHAR"/>
+        <result property="attendType" column="attend_type" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CmsTopicMap">
+        select
+          id, category_id, name, create_time, start_time, end_time, attend_count, attention_count, read_count, award_name, attend_type, content
+        from mall.cms_topic
+        where id = #{id}
+    </select>
+
+   <!--分页查询，查询指定行数据-->
+    <select id="pageByCmsTopic" resultMap="CmsTopicMap">
+        select
+          id, category_id, name, create_time, start_time, end_time, attend_count, attention_count, read_count, award_name, attend_type, content          
+        from mall.cms_topic
+        <where>
+            <if test="cmsTopic.id != null">
+                and id = #{cmsTopic.id}
+            </if>
+            <if test="cmsTopic.categoryId != null">
+                and category_id = #{cmsTopic.categoryId}
+            </if>
+            <if test="cmsTopic.name != null and cmsTopic.name != ''">
+                and name = #{cmsTopic.name}
+            </if>
+            <if test="cmsTopic.createTime != null">
+                and create_time = #{cmsTopic.createTime}
+            </if>
+            <if test="cmsTopic.startTime != null">
+                and start_time = #{cmsTopic.startTime}
+            </if>
+            <if test="cmsTopic.endTime != null">
+                and end_time = #{cmsTopic.endTime}
+            </if>
+            <if test="cmsTopic.attendCount != null">
+                and attend_count = #{cmsTopic.attendCount}
+            </if>
+            <if test="cmsTopic.attentionCount != null">
+                and attention_count = #{cmsTopic.attentionCount}
+            </if>
+            <if test="cmsTopic.readCount != null">
+                and read_count = #{cmsTopic.readCount}
+            </if>
+            <if test="cmsTopic.awardName != null and cmsTopic.awardName != ''">
+                and award_name = #{cmsTopic.awardName}
+            </if>
+            <if test="cmsTopic.attendType != null and cmsTopic.attendType != ''">
+                and attend_type = #{cmsTopic.attendType}
+            </if>
+            <if test="cmsTopic.content != null and cmsTopic.content != ''">
+                and content = #{cmsTopic.content}
+            </if>
+        </where>
+    </select>
+
+    <!--根据条件分页查询，查询指定行数据-->
+    <select id="pageAll" resultMap="CmsTopicMap">
+        select
+          id, category_id, name, create_time, start_time, end_time, attend_count, attention_count, read_count, award_name, attend_type, content          
+        from mall.cms_topic
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryByCmsTopic" resultMap="CmsTopicMap">
+        select
+          id, category_id, name, create_time, start_time, end_time, attend_count, attention_count, read_count, award_name, attend_type, content
+        from mall.cms_topic
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="startTime != null">
+                and start_time = #{startTime}
+            </if>
+            <if test="endTime != null">
+                and end_time = #{endTime}
+            </if>
+            <if test="attendCount != null">
+                and attend_count = #{attendCount}
+            </if>
+            <if test="attentionCount != null">
+                and attention_count = #{attentionCount}
+            </if>
+            <if test="readCount != null">
+                and read_count = #{readCount}
+            </if>
+            <if test="awardName != null and awardName != ''">
+                and award_name = #{awardName}
+            </if>
+            <if test="attendType != null and attendType != ''">
+                and attend_type = #{attendType}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into mall.cms_topic(category_id, name, create_time, start_time, end_time, attend_count, attention_count, read_count, award_name, attend_type, content)
+        values (#{categoryId}, #{name}, #{createTime}, #{startTime}, #{endTime}, #{attendCount}, #{attentionCount}, #{readCount}, #{awardName}, #{attendType}, #{content})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall.cms_topic
+        <set>
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="attendCount != null">
+                attend_count = #{attendCount},
+            </if>
+            <if test="attentionCount != null">
+                attention_count = #{attentionCount},
+            </if>
+            <if test="readCount != null">
+                read_count = #{readCount},
+            </if>
+            <if test="awardName != null and awardName != ''">
+                award_name = #{awardName},
+            </if>
+            <if test="attendType != null and attendType != ''">
+                attend_type = #{attendType},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall.cms_topic where id = #{id}
+    </delete>
+
+</mapper>
