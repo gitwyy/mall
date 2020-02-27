@@ -147,7 +147,6 @@ docker run -p 8085:8085 --name mall-portal \
 --link mysql:db \
 --link redis:redis \
 --link mongo:mongo \
---link rabbitmq:rabbit \
 -v /etc/timezone:/etc/timezone \
 -v /etc/localtime:/etc/localtime \
 -v /mydata/app/portal/logs:/var/logs \
